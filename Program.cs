@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GPSPrzebiegi.Models;
 
 namespace GPSPrzebiegi
 {
@@ -10,6 +11,14 @@ namespace GPSPrzebiegi
     {
         static void Main(string[] args)
         {
+            //Logs.writeEventLog("**********-- Uruchomienie usługi --**********");
+            Console.WriteLine("**********-- Uruchomienie usługi --**********");
+            MainClass main=new MainClass();
+              
+            //Logs.writeEventLog("**********-- Koniec usługi --**********");
+
+
         }
+        
     }
 }
