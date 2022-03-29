@@ -26,7 +26,7 @@ namespace GPSPrzebiegi.Models
 
         public int GidComarch { get; set; } 
 
-        public int Licznik { get; set; }  
+        public double Licznik { get; set; }  
 
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GPSPrzebiegi.Controllers;
 using GPSPrzebiegi.Models;
@@ -21,12 +22,22 @@ namespace GPSPrzebiegi
 
         public MainClass()
         {
-            sessionId = apiController.autenticate();
-            vehicles = apiController.getCarList(sessionId);
-            przypiszIdZBazyComarch();
-            parameters=apiController.getParams(sessionId);
-            przypiszLicznikDoPojazdow();
+
+            try
+            {
+                sessionId = apiController.autenticate();
+                vehicles = apiController.getCarList(sessionId);
+                przypiszIdZBazyComarch();
+                parameters = apiController.getParams(sessionId);
+                przypiszLicznikDoPojazdow();
+                dataController.insertDataToComarchBase(vehicles);
         }
+            catch (Exception ex)
+            {
+                Logs.writeEventLog(ex.ToString());
+            }
+
+}
         /// <summary>
         /// Metoda uzupełnia Id z tabelki CDN.Samochody do obiektów
         /// </summary>
@@ -37,9 +48,11 @@ namespace GPSPrzebiegi
             {
                 foreach (var v in vehicles)
                 {
+                    
                     if (v.RN != null)
                     {
-                        if (comarch.Rejestracja.Trim() == v.RN.Trim())
+                        
+                        if (Regex.Replace(comarch.Rejestracja, @"s", "") == Regex.Replace(v.RN, @"s", ""))
                         {
                             v.GidComarch = comarch.Id;
                         }
@@ -57,10 +70,14 @@ namespace GPSPrzebiegi
             {
                 foreach (var par in parameters)
                 {
-                    if (car.Id==par.VI && par.LV.Id==17)
+                    if (par.LV !=null)
                     {
-                        car.Licznik = (int)par.LV.V;
+                        if (car.Id == par.VI && par.Tp == 17)
+                        {
+                            car.Licznik = (double)par.LV.V;
+                        }
                     }
+                    
                 }
             }
         }

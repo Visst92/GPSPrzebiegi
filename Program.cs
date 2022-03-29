@@ -11,11 +11,9 @@ namespace GPSPrzebiegi
     {
         static void Main(string[] args)
         {
-            //Logs.writeEventLog("**********-- Uruchomienie usługi --**********");
-            Console.WriteLine("**********-- Uruchomienie usługi --**********");
+            Logs.writeEventLog("**********-- Uruchomienie usługi --**********");
             MainClass main=new MainClass();
-              
-            //Logs.writeEventLog("**********-- Koniec usługi --**********");
+            Logs.writeEventLog("**********-- Koniec usługi --**********");
 
 
         }

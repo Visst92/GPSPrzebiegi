@@ -39,5 +39,34 @@ namespace GPSPrzebiegi.Controllers
 
             return vehicles;
         }
+        /// <summary>
+        /// Metoda dodająca wartośći licznika z listy pojazdów
+        /// </summary>
+        /// <param name="vehicles"></param>
+        public void insertDataToComarchBase(Vehicle[] vehicles)
+        {
+            
+            foreach (var car in vehicles)
+            {
+                if (car.Licznik!=0&&car.GidComarch!=0)
+                {
+                    query = @"
+                    INSERT INTO [MARIUSZ].[GPSLicznik]
+                       ([GPL_SamId]
+                       ,[GPL_DataLicznik]
+                       ,[GPL_Wartosc]
+                       ,[GPL_DataDodania])
+                        VALUES
+                            ("+ car.GidComarch.ToString() + @"
+                            ,'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + @"'
+                            ," + car.Licznik.ToString().Replace(",",".") + @"
+                            ,'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + @"')
+
+                    ";
+                    DatabaseCon.GetInstance().NonQueryEx(query);
+                }
+            }
+
+        }
     }
 }
