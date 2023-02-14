@@ -11,8 +11,8 @@ namespace GPSPrzebiegi.Helpers
     }
     public enum Oddział
     {
-        Świdnica,
-        Poznań,
-        Zielona_Góra
+        Swidnica,
+        Poznan,
+        Zielona_Gora
     }
 }
